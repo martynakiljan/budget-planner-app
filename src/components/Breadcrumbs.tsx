@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
 
 	return (
 		<div className='bg-white/60 py-4'>
-			<nav className='container mx-auto px-6 flex items-center space-x-1 text-[#03045e]'>
+			<nav className='container mx-auto px-6 flex items-center space-x-1 text-[#03045e]  text-[12px]'>
 				<Link to='/' className='hover:underline font-medium'>
 					Home
 				</Link>

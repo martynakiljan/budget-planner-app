@@ -15,9 +15,11 @@ function App() {
 			<Header />
 			<Breadcrumbs />
 			<Routes>
-				<Route path='/' element={<Dashboard count={count} />} />
-				<Route path='/dashboard' element={<Dashboard count={count} 		incomeHistory={history.income}
-			expenseHistory={history.expense}/>} />
+				<Route path='/' element={<Dashboard count={count} incomeHistory={[]} expenseHistory={[]} />} />
+				<Route
+					path='/dashboard'
+					element={<Dashboard count={count} incomeHistory={history.income} expenseHistory={history.expense} />}
+				/>
 				<Route
 					path='/incomes'
 					element={
@@ -27,7 +29,10 @@ function App() {
 							errors={errors.income}
 							onChange={onChange('income')}
 							onSubmit={onSubmit('income')}
-							incomeHistory={history.income} formExpenses={{}} expenseHistory={[]}						/>
+							incomeHistory={history.income}
+							formExpenses={{}}
+							expenseHistory={[]}
+						/>
 					}
 				/>
 				<Route
@@ -39,7 +44,10 @@ function App() {
 							errors={errors.expense}
 							onChange={onChange('expense')}
 							onSubmit={onSubmit('expense')}
-							expenseHistory={history.expense} formIncomes={{}} incomeHistory={[]}						/>
+							expenseHistory={history.expense}
+							formIncomes={{}}
+							incomeHistory={[]}
+						/>
 					}
 				/>
 			</Routes>

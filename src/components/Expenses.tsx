@@ -46,8 +46,8 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 				</div>
 
 				{/* Formularz */}
-				<div className='bg-white rounded-2xl shadow-md p-8'>
-					<h3 className='text-xl font-semibold text-gray-800 mb-6'>Add New Expense</h3>
+
+			
 					<IncomeExpenseForm
 						formData={formExpenses}
 						errors={errors}
@@ -56,7 +56,7 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 						isDisabled={isDisabled}
 						formType='expense'
 					/>
-				</div>
+				
 
 				{/* Historia */}
 				<div className='mt-12'>

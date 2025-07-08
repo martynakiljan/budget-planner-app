@@ -47,8 +47,7 @@ const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory
 				</div>
 
 				{/* Formularz dodawania dochodu */}
-				<div className='bg-white rounded-2xl shadow-md p-8'>
-					<h3 className='text-xl font-semibold text-gray-800 mb-6'>Add New Income</h3>
+			
 					<IncomeExpenseForm
 						formData={formIncomes}
 						errors={errors}
@@ -57,7 +56,7 @@ const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory
 						isDisabled={isDisabled}
 						formType='income'
 					/>
-				</div>
+			
 				<div className='bg-white rounded-2xl shadow-md p-8 mt-12'>
 					<h3 className='text-xl font-semibold text-gray-800 mb-6' ref={historyRef}>
 						History:
