@@ -1,6 +1,7 @@
 // src/components/IncomeExpenseForm.tsx
 import React from 'react'
 import type { FieldValues } from '../types/type'
+import DatePicker from 'react-datepicker'
 
 type Props = {
 	formData: FieldValues
@@ -32,7 +33,6 @@ const IncomeExpenseForm = ({ formData, errors, onChange, onSubmit, isDisabled, f
 					{errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
 				</div>
 
-
 				{/* Amount */}
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>Amount</label>
@@ -50,29 +50,34 @@ const IncomeExpenseForm = ({ formData, errors, onChange, onSubmit, isDisabled, f
 				{/* Date */}
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>Date</label>
-					<input
-						name='date'
-						value={formData.date}
-						onChange={onChange}
-						type='text'
-						placeholder='dd.mm.rrrr'
+					<DatePicker
+						selected={formData.date ? new Date(formData.date.split('.').reverse().join('-')) : null}
+						onChange={(date: Date | null) => {
+							if (!date) return
+							const formatted = date.toLocaleDateString('pl-PL')
+							onChange({ target: { name: 'date', value: formatted } } as React.ChangeEvent<HTMLInputElement>)
+						}}
+						dateFormat='dd.MM.yyyy'
 						className='w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm'
+						showPopperArrow
+						placeholderText='Wybierz datę'
+						isClearable
 					/>
-					{errors.date && <p className='text-red-500 text-sm mt-1'>{errors.date}</p>}
 				</div>
+				<div></div>
 
-				{/* Submit */}
-				<button
-					type='submit'
-					disabled={isDisabled}
-					className={`px-6 py-2 rounded-lg text-white ${
-						isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-					}`}>
-					Add {formType}
-				</button>
+		
+				<div className='col-span-1 md:col-span-2'>
+					<button
+						type='submit'
+						disabled={isDisabled}
+						className={`w-full px-6 py-2 rounded-lg text-white ${
+							isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+						}`}>
+						Add {formType}
+					</button>
+				</div>
 			</form>
-
-
 		</div>
 	)
 }

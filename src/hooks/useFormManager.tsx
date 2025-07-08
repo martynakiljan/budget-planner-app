@@ -5,20 +5,19 @@ import type { FieldValues } from '../types/type'
 export const useFormManager = () => {
 	const [formData, setFormData] = useState<Record<string, FieldValues>>({
 		income: { name: '', amount: '', date: '' },
-		expense: { name: '',  amount: '', date: '' },
+		expense: { name: '', amount: '', date: '' },
 	})
 
 	const [errors, setErrors] = useState<Record<string, FieldValues>>({
-		income: { name: '',  amount: '', date: '' },
-		expense: { name: '',  amount: '', date: '' },
+		income: { name: '', amount: '', date: '' },
+		expense: { name: '', amount: '', date: '' },
 	})
 
 	const [history, setHistory] = useState<Record<string, FieldValues[]>>({
 		income: [],
 		expense: [],
 	})
-
-	const [count, setCount] = useState<Record<string, number>>({
+	const [count, setCount] = useState<{ income: number; expense: number }>({
 		income: 0,
 		expense: 0,
 	})

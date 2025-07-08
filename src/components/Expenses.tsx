@@ -5,8 +5,6 @@ import type { FormProps } from '../types/type'
 
 const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHistory }: FormProps) => {
 	const historyRef = useRef<HTMLDivElement | null>(null)
-	const [search, setSearch] = useState('')
-
 
 	const scrollToHistory = () => {
 		historyRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -30,18 +28,6 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 				<div>
 					<h1 className='text-2xl font-bold text-gray-800 mb-1'>Expenses</h1>
 					<p className='text-gray-600 text-sm'>Here's a summary of your financial status.</p>
-				</div>
-
-				{/* Pole szukania */}
-				<div className='max-w-md'>
-					<label className='block text-sm font-medium text-gray-700 mb-1'>Search</label>
-					<input
-						type='text'
-						placeholder='Search expenses...'
-						value={search}
-						onChange={e => setSearch(e.target.value)}
-						className='w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-					/>
 				</div>
 
 				{/* Total expenses i wykres */}
@@ -69,32 +55,28 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 						onSubmit={onSubmit}
 						isDisabled={isDisabled}
 						formType='expense'
-		
 					/>
-
-					<div className='mt-8'>
-						<button className='px-6 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700'>Export to Excel</button>
-					</div>
 				</div>
 
 				{/* Historia */}
 				<div className='mt-12'>
-					<h3 className='text-xl font-semibold text-gray-800 mb-4' ref={historyRef}>
-						History:
-					</h3>
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+		
+					<div className='bg-white rounded-2xl shadow-md p-8 mt-12'>
+						<h3 className='text-xl font-semibold text-gray-800 mb-6' ref={historyRef}>
+							History:
+						</h3>
 						{expenseHistory.length === 0 ? (
-							<p className='text-gray-500'>No expenses yet.</p>
+							<p className='text-gray-500'>No incomes yet.</p>
 						) : (
-							expenseHistory.map((expense, index) => (
-								<div key={index} className='bg-white rounded-xl shadow p-6'>
-									<h4 className='text-lg font-bold text-gray-800 mb-1'>{expense.name}</h4>
-					
-									<p className='text-red-600 font-semibold mb-1'>€{expense.amount}</p>
-									<p className='text-gray-400 text-sm'>Date: {expense.date}</p>
-			
-								</div>
-							))
+							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+								{expenseHistory.map((expense, index) => (
+									<div key={index} className='bg-gray-50 rounded-xl shadow p-6'>
+										<h4 className='text-lg font-bold text-gray-800 mb-1'>{expense.name}</h4>
+										<p className='text-green-600 font-semibold mb-1'>€{expense.amount}</p>
+										<p className='text-gray-400 text-sm'>Date: {expense.date}</p>
+									</div>
+								))}
+							</div>
 						)}
 					</div>
 				</div>

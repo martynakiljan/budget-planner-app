@@ -1,11 +1,10 @@
 import imgIncome from '../images/income.png'
 import type { FormProps } from '../types/type'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import IncomeExpenseForm from './IncomeExpenseForm'
 
 const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory }: FormProps) => {
 	const historyRef = useRef<HTMLDivElement | null>(null)
-
 
 	const scrollToHistory = () => {
 		historyRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -19,8 +18,6 @@ const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory
 		}
 	}, [])
 
-	const [search, setSearch] = useState('')
-
 	const isDisabled = Object.values(formIncomes).some(val => val === '') || Object.values(errors).some(err => err !== '')
 
 	return (
@@ -30,18 +27,6 @@ const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory
 				<div>
 					<h1 className='text-2xl font-bold text-gray-800 mb-1'>Incomes</h1>
 					<p className='text-gray-600 text-sm'>Here's a summary of your financial status.</p>
-				</div>
-
-				{/* Pole szukania */}
-				<div className='max-w-md'>
-					<label className='block text-sm font-medium text-gray-700 mb-1'>Search</label>
-					<input
-						type='text'
-						placeholder='Search incomes...'
-						value={search}
-						onChange={e => setSearch(e.target.value)}
-						className='w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-					/>
 				</div>
 
 				{/* Total income i wykres */}
@@ -72,29 +57,24 @@ const Incomes = ({ formIncomes, onChange, onSubmit, errors, count, incomeHistory
 						isDisabled={isDisabled}
 						formType='income'
 					/>
-
-					<div className='mt-8'>
-						<button className='px-6 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-600'>Export to Excel</button>
-					</div>
 				</div>
-				<div className='mt-12'>
-					<h3 className='text-xl font-semibold text-gray-800 mb-4' ref={historyRef}>
+				<div className='bg-white rounded-2xl shadow-md p-8 mt-12'>
+					<h3 className='text-xl font-semibold text-gray-800 mb-6' ref={historyRef}>
 						History:
 					</h3>
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-						{incomeHistory.length === 0 ? (
-							<p className='text-gray-500'>No incomes yet.</p>
-						) : (
-							incomeHistory.map((income, index) => (
-								<div key={index} className='bg-white rounded-xl shadow p-6'>
+					{incomeHistory.length === 0 ? (
+						<p className='text-gray-500'>No incomes yet.</p>
+					) : (
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+							{incomeHistory.map((income, index) => (
+								<div key={index} className='bg-gray-50 rounded-xl shadow p-6'>
 									<h4 className='text-lg font-bold text-gray-800 mb-1'>{income.name}</h4>
-					
 									<p className='text-green-600 font-semibold mb-1'>€{income.amount}</p>
 									<p className='text-gray-400 text-sm'>Date: {income.date}</p>
 								</div>
-							))
-						)}
-					</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</main>

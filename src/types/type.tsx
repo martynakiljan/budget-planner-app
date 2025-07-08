@@ -9,8 +9,8 @@ export type FormProps = {
 	incomeHistory: FieldValues[]
 	expenseHistory: FieldValues[]
 	count: number
-	onChange: (type: 'income' | 'expense') => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
-	onSubmit: (type: 'income' | 'expense') => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 export type DashboardProps = {
@@ -18,4 +18,6 @@ export type DashboardProps = {
 		income: number
 		expense: number
 	}
+	incomeHistory: { [key: string]: string }[]
+	expenseHistory: { [key: string]: string }[]
 }
