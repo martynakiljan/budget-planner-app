@@ -3,8 +3,8 @@ import { Link, NavLink } from 'react-router-dom'
 const Header = () => {
 	return (
 		<header className='bg-white shadow-md'>
-<nav className="container mx-auto flex items-end justify-between py-4 px-4 sm:px-6">
-  <Link to="/" className="flex items-end gap-2">
+			<nav className='container mx-auto flex items-end justify-between py-4 px-4 sm:px-6'>
+				<Link to='/' className='flex items-end gap-2'>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						fill='black'
@@ -17,7 +17,7 @@ const Header = () => {
 					</svg>
 					<span className='text-gray-800   font-semibold leading-tight'>Budget planner manager</span>
 				</Link>
-		  <div className="flex items-end gap-4 sm:space-x-8">
+				<div className='flex items-end gap-4 sm:space-x-8'>
 					{['Dashboard', 'Incomes', 'Expenses'].map(item => (
 						<NavLink
 							key={item}

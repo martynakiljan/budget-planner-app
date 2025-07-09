@@ -53,25 +53,30 @@ export const useFormManager = () => {
 			id: '',
 		}
 
-		setErrors(prev => ({ ...prev, [type]: newErrors }))
-
 		const hasErrors = Object.values(newErrors).some(err => err !== '')
-		const numericAmount = parseFloat(current.amount)
-
-		if (!hasErrors && !isNaN(numericAmount)) {
-			const newEntry = {
-				...current,
-				id: crypto.randomUUID(),
-			}
-
-			setCount(prev => ({ ...prev, [type]: prev[type] + numericAmount }))
-			setHistory(prev => ({ ...prev, [type]: [...prev[type], newEntry] }))
-
-			setFormData(prev => ({
-				...prev,
-				[type]: { name: '', amount: '', date: '', id: '' },
-			}))
+		if (hasErrors) {
+			setErrors(prev => ({ ...prev, [type]: newErrors }))
+			return
 		}
+
+		const numericAmount = parseFloat(current.amount)
+		if (isNaN(numericAmount)) return
+
+		const newEntry = {
+			...current,
+			id: crypto.randomUUID(),
+		}
+
+		setCount(prev => ({ ...prev, [type]: prev[type] + numericAmount }))
+		setHistory(prev => ({ ...prev, [type]: [...prev[type], newEntry] }))
+		setFormData(prev => ({
+			...prev,
+			[type]: { name: '', amount: '', date: '', id: '' },
+		}))
+		setErrors(prev => ({
+			...prev,
+			[type]: { id: '', name: '', amount: '', date: '' },
+		}))
 	}
 
 	const handleDelete = (type: 'income' | 'expense', idToDelete: string) => {

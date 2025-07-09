@@ -1,4 +1,4 @@
-// src/components/IncomeExpenseForm.tsx
+
 import React from 'react'
 import type { FieldValues } from '../types/type'
 import DatePicker from 'react-datepicker'
@@ -19,7 +19,7 @@ const IncomeExpenseForm = ({ formData, errors, onChange, onSubmit, isDisabled, f
 		<div className='bg-white rounded-2xl shadow-md p-8'>
 			<h3 className='text-xl font-semibold text-gray-800 mb-6'>Add New {capitalized}</h3>
 			<form className='grid grid-cols-1 md:grid-cols-2 gap-6' onSubmit={onSubmit}>
-				{/* Name */}
+
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>Name</label>
 					<input
@@ -33,7 +33,6 @@ const IncomeExpenseForm = ({ formData, errors, onChange, onSubmit, isDisabled, f
 					{errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
 				</div>
 
-				{/* Amount */}
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>Amount</label>
 					<input
@@ -47,7 +46,7 @@ const IncomeExpenseForm = ({ formData, errors, onChange, onSubmit, isDisabled, f
 					{errors.amount && <p className='text-red-500 text-sm mt-1'>{errors.amount}</p>}
 				</div>
 
-				{/* Date */}
+
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>Date</label>
 					<DatePicker
