@@ -4,19 +4,20 @@ import type { FieldValues } from '../types/type'
 
 export const useFormManager = () => {
 	const [formData, setFormData] = useState<Record<string, FieldValues>>({
-		income: { name: '', amount: '', date: '' },
-		expense: { name: '', amount: '', date: '' },
+		income: { id: '', name: '', amount: '', date: '' },
+		expense: { id: '', name: '', amount: '', date: '' },
 	})
 
 	const [errors, setErrors] = useState<Record<string, FieldValues>>({
-		income: { name: '', amount: '', date: '' },
-		expense: { name: '', amount: '', date: '' },
+		income: { id: '', name: '', amount: '', date: '' },
+		expense: { id: '', name: '', amount: '', date: '' },
 	})
 
 	const [history, setHistory] = useState<Record<string, FieldValues[]>>({
 		income: [],
 		expense: [],
 	})
+
 	const [count, setCount] = useState<{ income: number; expense: number }>({
 		income: 0,
 		expense: 0,
@@ -45,10 +46,12 @@ export const useFormManager = () => {
 		e.preventDefault()
 		const current = formData[type]
 
-		const newErrors: FieldValues = Object.keys(current).reduce((acc, key) => {
-			acc[key] = validate(key, current[key])
-			return acc
-		}, {} as FieldValues)
+		const newErrors: FieldValues = {
+			name: validate('name', current.name),
+			amount: validate('amount', current.amount),
+			date: validate('date', current.date),
+			id: '',
+		}
 
 		setErrors(prev => ({ ...prev, [type]: newErrors }))
 
@@ -56,13 +59,37 @@ export const useFormManager = () => {
 		const numericAmount = parseFloat(current.amount)
 
 		if (!hasErrors && !isNaN(numericAmount)) {
+			const newEntry = {
+				...current,
+				id: crypto.randomUUID(),
+			}
+
 			setCount(prev => ({ ...prev, [type]: prev[type] + numericAmount }))
-			setHistory(prev => ({ ...prev, [type]: [...prev[type], current] }))
+			setHistory(prev => ({ ...prev, [type]: [...prev[type], newEntry] }))
+
 			setFormData(prev => ({
 				...prev,
-				[type]: Object.fromEntries(Object.keys(current).map(key => [key, ''])),
+				[type]: { name: '', amount: '', date: '', id: '' },
 			}))
 		}
+	}
+
+	const handleDelete = (type: 'income' | 'expense', idToDelete: string) => {
+		const entry = history[type].find(i => i.id === idToDelete)
+		if (!entry) return
+
+		const amount = parseFloat(entry.amount)
+		if (isNaN(amount)) return
+
+		setHistory(prev => ({
+			...prev,
+			[type]: prev[type].filter(i => i.id !== idToDelete),
+		}))
+
+		setCount(prev => ({
+			...prev,
+			[type]: prev[type] - amount,
+		}))
 	}
 
 	return {
@@ -72,5 +99,6 @@ export const useFormManager = () => {
 		onSubmit,
 		history,
 		count,
+		handleDelete,
 	}
 }

@@ -1,16 +1,28 @@
 export type FieldValues = {
-	[key: string]: string
+	id?: string
+	name: string
+	amount: string
+	date: string
 }
 
-export type FormProps = {
+export type IncomeFormProps = {
 	formIncomes: FieldValues
-	formExpenses: FieldValues
 	errors: FieldValues
 	incomeHistory: FieldValues[]
+	count: number
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+	handleDelete: (id: string) => void
+}
+
+export type ExpenseFormProps = {
+	formExpenses: FieldValues
+	errors: FieldValues
 	expenseHistory: FieldValues[]
 	count: number
 	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
 	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+	handleDelete: (id: string) => void
 }
 
 export type DashboardProps = {

@@ -8,7 +8,7 @@ import './styles/custom.scss'
 import { useFormManager } from './hooks/useFormManager'
 
 function App() {
-	const { formData, errors, onChange, onSubmit, history, count } = useFormManager()
+	const { formData, errors, onChange, onSubmit, history, count, handleDelete } = useFormManager()
 
 	return (
 		<>
@@ -30,8 +30,7 @@ function App() {
 							onChange={onChange('income')}
 							onSubmit={onSubmit('income')}
 							incomeHistory={history.income}
-							formExpenses={{}}
-							expenseHistory={[]}
+							handleDelete={id => handleDelete('income', id)}
 						/>
 					}
 				/>
@@ -45,8 +44,7 @@ function App() {
 							onChange={onChange('expense')}
 							onSubmit={onSubmit('expense')}
 							expenseHistory={history.expense}
-							formIncomes={{}}
-							incomeHistory={[]}
+							handleDelete={id => handleDelete('expense', id)}
 						/>
 					}
 				/>

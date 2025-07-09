@@ -1,9 +1,18 @@
 import imgExpenses from '../images/expenses.png'
 import IncomeExpenseForm from './IncomeExpenseForm'
-import { useRef, useState, useEffect } from 'react'
-import type { FormProps } from '../types/type'
+import { useRef, useEffect } from 'react'
+import type { ExpenseFormProps } from '../types/type'
+import { Trash2 } from 'lucide-react'
 
-const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHistory }: FormProps) => {
+const Expenses = ({
+	formExpenses,
+	onChange,
+	onSubmit,
+	errors,
+	count,
+	expenseHistory,
+	handleDelete,
+}: ExpenseFormProps) => {
 	const historyRef = useRef<HTMLDivElement | null>(null)
 
 	const scrollToHistory = () => {
@@ -18,19 +27,18 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 		}
 	}, [])
 
+	console.log(formExpenses, errors)
+
 	const isDisabled =
-		Object.values(formExpenses).some(val => val === '') || Object.values(errors).some(err => err !== '')
+		['name', 'amount', 'date'].some(key => formExpenses[key] === '') || Object.values(errors).some(err => err !== '')
 
 	return (
 		<main className='bg-gray-100 min-h-screen py-8'>
 			<div className='container mx-auto px-6 space-y-8'>
-				{/* Tytuł i opis */}
 				<div>
 					<h1 className='text-2xl font-bold text-gray-800 mb-1'>Expenses</h1>
 					<p className='text-gray-600 text-sm'>Here's a summary of your financial status.</p>
 				</div>
-
-				{/* Total expenses i wykres */}
 				<div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-start'>
 					<div className='bg-white rounded-2xl shadow-md p-8 text-center'>
 						<h2 className='text-lg font-semibold text-gray-700 mb-2'>Total Expenses</h2>
@@ -44,42 +52,29 @@ const Expenses = ({ formExpenses, onChange, onSubmit, errors, count, expenseHist
 						<img src={imgExpenses} />
 					</div>
 				</div>
+				<IncomeExpenseForm
+					formData={formExpenses}
+					errors={errors}
+					onChange={onChange}
+					onSubmit={onSubmit}
+					isDisabled={isDisabled}
+					formType='expense'
+				/>
 
-				{/* Formularz */}
+				{expenseHistory.map(expense => (
+					<div key={expense.id} className='relative bg-gray-50 rounded-xl shadow p-6'>
+						<button
+							onClick={() => handleDelete(expense.id!)}
+							className='absolute top-2 right-2 text-gray-400 hover:text-red-600'
+							aria-label='Delete income'>
+							<Trash2 size={18} />
+						</button>
 
-			
-					<IncomeExpenseForm
-						formData={formExpenses}
-						errors={errors}
-						onChange={onChange}
-						onSubmit={onSubmit}
-						isDisabled={isDisabled}
-						formType='expense'
-					/>
-				
-
-				{/* Historia */}
-				<div className='mt-12'>
-		
-					<div className='bg-white rounded-2xl shadow-md p-8 mt-12'>
-						<h3 className='text-xl font-semibold text-gray-800 mb-6' ref={historyRef}>
-							History:
-						</h3>
-						{expenseHistory.length === 0 ? (
-							<p className='text-gray-500'>No incomes yet.</p>
-						) : (
-							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-								{expenseHistory.map((expense, index) => (
-									<div key={index} className='bg-gray-50 rounded-xl shadow p-6'>
-										<h4 className='text-lg font-bold text-gray-800 mb-1'>{expense.name}</h4>
-										<p className='text-green-600 font-semibold mb-1'>€{expense.amount}</p>
-										<p className='text-gray-400 text-sm'>Date: {expense.date}</p>
-									</div>
-								))}
-							</div>
-						)}
+						<h4 className='text-lg font-bold text-gray-800 mb-1'>{expense.name}</h4>
+						<p className='text-red-600 font-semibold mb-1'> - €{expense.amount}</p>
+						<p className='text-gray-400 text-sm'>Date: {expense.date}</p>
 					</div>
-				</div>
+				))}
 			</div>
 		</main>
 	)
