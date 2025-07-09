@@ -3,6 +3,7 @@ export type FieldValues = {
 	name: string
 	amount: string
 	date: string
+	[key: string]: string | undefined
 }
 
 export type IncomeFormProps = {
