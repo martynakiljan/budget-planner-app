@@ -12,7 +12,7 @@
 
 ## 🔗 Live
 
-[🌐 Open Live App]([https://www.google.com](https://gorgeous-puffpuff-2bce62.netlify.app/))
+[🌐 Open Live App](https://gorgeous-puffpuff-2bce62.netlify.app/)
 
 ## 🧰 Tech Stack
 
