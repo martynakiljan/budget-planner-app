@@ -27,10 +27,10 @@ export type ExpenseFormProps = {
 }
 
 export type DashboardProps = {
-	count: {
-		income: number
-		expense: number
-	}
-	incomeHistory: { [key: string]: string }[]
-	expenseHistory: { [key: string]: string }[]
+  count: {
+    income: number
+    expense: number
+  }
+  incomeHistory: { [key: string]: string | undefined }[]
+  expenseHistory: { [key: string]: string | undefined }[]
 }
